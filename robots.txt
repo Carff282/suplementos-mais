@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+# Configure the sitemap URL after the production domain is confirmed.
