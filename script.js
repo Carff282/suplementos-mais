@@ -127,6 +127,10 @@ const cartFooter = document.querySelector("#cart-footer");
 const cartTotal = document.querySelector("#cart-total");
 const currency = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
 
+cartCount.addEventListener("animationend", () => {
+  cartCount.classList.remove("is-adding");
+});
+
 function renderProducts(category = "todos") {
   const visibleProducts = category === "todos"
     ? products
@@ -228,6 +232,9 @@ productGrid.addEventListener("click", (event) => {
   const id = button.dataset.addProduct;
   cart.set(id, (cart.get(id) || 0) + 1);
   updateCart();
+  cartCount.classList.remove("is-adding");
+  void cartCount.offsetWidth;
+  cartCount.classList.add("is-adding");
   const product = products.find((item) => item.id === id);
   button.setAttribute("aria-label", `${product.name} adicionado à sacola`);
   button.innerHTML = '<span aria-hidden="true">✓</span> Adicionado';
@@ -287,6 +294,21 @@ document.querySelector("#checkout-form").addEventListener("submit", (event) => {
     `Nome: ${name}`,
     `Endereço para entrega: ${address}`
   ].join("\n");
+
+  window.gtag("event", "whatsapp_checkout", {
+    currency: "BRL",
+    value: total,
+    item_count: getCartCount(),
+    items: [...cart.entries()].map(([id, quantity]) => {
+      const product = products.find((item) => item.id === id);
+      return {
+        item_id: product.id,
+        item_name: product.name,
+        price: product.price,
+        quantity
+      };
+    })
+  });
 
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
   cart.clear();
