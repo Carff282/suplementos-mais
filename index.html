@@ -119,9 +119,12 @@
               <button class="category-chip" type="button" data-category="creatina" aria-pressed="false">Creatina</button>
               <button class="category-chip" type="button" data-category="proteina" aria-pressed="false">Proteínas</button>
               <button class="category-chip" type="button" data-category="energia" aria-pressed="false">Pré-treino</button>
+              <button class="category-chip" type="button" data-category="termogenico" aria-pressed="false">Termogênicos</button>
+              <button class="category-chip" type="button" data-category="pasta" aria-pressed="false">Pastas de amendoim</button>
+              <button class="category-chip" type="button" data-category="hipercalorico" aria-pressed="false">Hipercalóricos</button>
               <button class="category-chip" type="button" data-category="saude" aria-pressed="false">Saúde &amp; bem-estar</button>
             </div>
-            <p class="catalog-note">Catálogo ilustrativo: confirme produtos, valores e estoque pelo WhatsApp.</p>
+            <p class="catalog-note">Preços e informações conforme os produtos enviados. Confirme estoque pelo WhatsApp.</p>
           </div>
           <div class="product-grid" id="product-grid" aria-live="polite" aria-busy="true"></div>
         </div>
@@ -223,10 +226,35 @@
         <button class="text-link" type="button" data-close-cart>Explorar produtos <span aria-hidden="true">↗</span></button>
       </div>
       <div class="cart-footer" id="cart-footer" hidden>
-        <p class="cart-disclaimer">Valores de referência. A loja confirma o total e a disponibilidade pelo WhatsApp.</p>
+        <fieldset class="payment-options" id="payment-options">
+          <legend>Escolha a forma de pagamento</legend>
+          <label class="payment-option"><input type="radio" name="paymentMethod" value="dinheiro"><span>Dinheiro</span></label>
+          <label class="payment-option"><input type="radio" name="paymentMethod" value="pix"><span>Pix</span></label>
+          <label class="payment-option"><input type="radio" name="paymentMethod" value="debito"><span>Cartão de débito</span></label>
+          <label class="payment-option"><input type="radio" name="paymentMethod" value="credito-vista"><span>Crédito à vista</span></label>
+          <label class="payment-option payment-option--installments"><input type="radio" name="paymentMethod" value="credito-parcelado" id="installment-payment-option" aria-describedby="installment-eligibility"><span>Crédito parcelado</span></label>
+          <p class="payment-hint" id="installment-eligibility">Em compras a partir de R$ 120,00, em até 3 parcelas mensais.</p>
+        </fieldset>
+        <div class="installment-field" id="installment-field" hidden>
+          <label for="installments">Parcelas mensais</label>
+          <select id="installments" name="installments">
+            <option value="" selected disabled>Escolha a quantidade de parcelas</option>
+            <option value="2">2 parcelas</option>
+            <option value="3">3 parcelas</option>
+          </select>
+          <p class="installment-preview" id="installment-preview" aria-live="polite"></p>
+        </div>
+        <p class="payment-error" id="payment-error" role="alert" hidden>Selecione uma forma de pagamento para continuar.</p>
+        <p class="cart-disclaimer">A loja confirma disponibilidade e total do pedido pelo WhatsApp.</p>
         <div class="cart-total"><span>Subtotal de referência</span><strong id="cart-total">R$ 0,00</strong></div>
         <button class="button button--lime button--full" type="button" id="checkout-button">Continuar pelo WhatsApp <span aria-hidden="true">↗</span></button>
       </div>
+    </dialog>
+
+    <dialog class="product-image-dialog" id="product-image-dialog" aria-label="Imagem ampliada do produto">
+      <button class="icon-button product-image-dialog__close" type="button" data-close-product-image aria-label="Fechar imagem ampliada">×</button>
+      <img id="product-image-preview" alt="">
+      <p id="product-image-caption"></p>
     </dialog>
 
     <dialog class="checkout-dialog" id="checkout-dialog" aria-labelledby="checkout-title">
